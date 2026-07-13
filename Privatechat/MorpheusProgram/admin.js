@@ -3,99 +3,54 @@ let socket;
 
 function login(){
 
-
-socket = new WebSocket(
-"wss://YOUR-RENDER-URL.onrender.com"
-);
+    console.log("Login button clicked");
 
 
-
-socket.onopen=function(){
-
-
-socket.send(JSON.stringify({
-
-type:"admin",
-
-password:
-document.getElementById("password").value
+    socket = new WebSocket(
+        "https://private-chat-wnxf.onrender.com"
+    );
 
 
-}));
+    socket.onopen = function(){
+
+        console.log("Connected to server");
 
 
+        socket.send(JSON.stringify({
 
-};
+            type:"admin",
 
+            password:
+            document.getElementById("password").value
 
+        }));
 
-socket.onmessage=function(event){
-
-
-let data =
-JSON.parse(event.data);
-
-
-
-if(data.type==="rooms"){
+    };
 
 
-let box =
-document.getElementById("rooms");
+    socket.onmessage = function(event){
+
+        console.log(event.data);
 
 
-box.innerHTML="";
+        let data = JSON.parse(event.data);
 
 
-data.rooms.forEach(room=>{
+        if(data.type === "adminLogin"){
+
+            alert("Admin Login Successful");
+
+        }
 
 
-let div =
-document.createElement("div");
+    };
 
 
+    socket.onerror = function(error){
 
-div.innerHTML =
-`
-<b>${room}</b>
+        console.log("WebSocket error:", error);
 
-<button onclick="closeRoom('${room}')">
-Close
-</button>
-
-`;
-
-
-
-box.appendChild(div);
-
-
-});
-
-
-
-}
-
-
-};
-
-
-}
-
-
-
-
-function closeRoom(room){
-
-
-socket.send(JSON.stringify({
-
-type:"closeRoom",
-
-room:room
-
-
-}));
+    };
 
 
 }
