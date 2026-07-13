@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<title>Admin Panel</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
 
-
-<div class="admin">
-
-
-<div class="rooms">
-
-<h2>Rooms</h2>
-
-<div id="rooms"></div>
-
+<!-- 🟢 NEW: The Login Container -->
+<div id="loginContainer" style="display: flex; flex-direction: column; align-items: center; margin-top: 100px;">
+    <h2>Admin Login</h2>
+    <input type="password" id="password" placeholder="Enter Admin Password">
+    <button onclick="login()">Login</button>
 </div>
 
+<!-- 🟢 MODIFIED: Wrapped the admin panel in the dashboard ID and hid it by default -->
+<div id="dashboard" class="admin" style="display: none;">
+    <div class="rooms">
+        <h2>Rooms</h2>
+        <div id="rooms"></div>
+    </div>
 
-
-<div class="chat">
-
-<h2 id="currentRoom">
-No Room Selected
-</h2>
-
-
-<div id="messages"></div>
-
-
+    <div class="chat">
+        <h2 id="currentRoom">No Room Selected</h2>
+        <div id="messages"></div>
+    </div>
 </div>
-
-
-</div>
-
-
 
 <script src="admin.js"></script>
-
-
 </body>
-
 </html>
