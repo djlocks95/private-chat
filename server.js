@@ -31,30 +31,31 @@ server.on("connection", socket => {
             sendAdminUpdate();
         }
 
-        // NORMAL CHAT MESSAGE
-        if(msg.type === "message"){
+// NORMAL CHAT MESSAGE OR IMAGE
+        if(msg.type === "message" || msg.type === "image"){
             if(rooms[socket.room]){
                 rooms[socket.room].forEach(client =>{
                     client.send(JSON.stringify({
-                        type:"message",
-                        user:socket.username,
-                        text:msg.text
+                        type: msg.type,
+                        user: socket.username,
+                        text: msg.text,
+                        image: msg.image 
                     }));
                 });
 
                 admins.forEach(admin => {
                     if (admin.readyState === WebSocket.OPEN) {
                         admin.send(JSON.stringify({
-                            type:"adminMessage",
-                            room:socket.room,
-                            user:socket.username,
-                            text:msg.text
+                            type: msg.type === "image" ? "adminImage" : "adminMessage",
+                            room: socket.room,
+                            user: socket.username,
+                            text: msg.text,
+                            image: msg.image
                         }));
                     }
                 });
             }
         }
-
         // ADMIN LOGIN
         if(msg.type === "admin"){
             if(msg.password === "ADMIN123"){
