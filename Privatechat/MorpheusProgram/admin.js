@@ -21,12 +21,17 @@ function login(){
             document.getElementById("dashboard").style.display = "flex";
             showRooms(data.rooms);
         }
+        
+        // 🟢 NEW: Handles wrong password alerts
+        if(data.type === "adminLoginFailure"){
+            alert(data.message);
+        }
 
         if(data.type === "rooms"){
             showRooms(data.rooms);
         }
 
-if(data.type === "adminMessage" || data.type === "adminImage"){
+        if(data.type === "adminMessage" || data.type === "adminImage"){
             let mainBox = document.getElementById("messages");
             let roomDiv = Array.from(mainBox.children).find(child => child.getAttribute("data-room-name") === data.room);
             
@@ -46,6 +51,9 @@ if(data.type === "adminMessage" || data.type === "adminImage"){
                 roomDiv.scrollTop = roomDiv.scrollHeight;
             }
         }
+    }; // 🟢 CRITICAL FIX: This closing bracket and semicolon was missing!
+}
+
 function showRooms(rooms){
     let leftBox = document.getElementById("rooms");
     let mainBox = document.getElementById("messages");
