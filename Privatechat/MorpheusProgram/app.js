@@ -1,4 +1,4 @@
-let roomPassword = "1234";
+let roomPassword = "KEY";
 
 let username = "";
 let roomCode = "";
@@ -53,7 +53,7 @@ document.getElementById("joinButton").onclick = function(){
 function connectServer(){
 
     socket = new WebSocket(
-        "ws://localhost:3000"
+        "https://private-chat-wnxf.onrender.com"
     );
 
 
