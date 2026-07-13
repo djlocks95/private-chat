@@ -1,92 +1,54 @@
-.admin{
-
-display:flex;
-height:90vh;
-
-}
-
-
-.rooms{
-
-width:30%;
-padding:20px;
-
-background:#222;
-
-color:white;
-
-}
-
-
-.chat{
-
-width:70%;
-padding:20px;
-
-background:#111;
-
-color:white;
-
-}
-
-
-#messages{
-
-height:80vh;
-
-overflow:auto;
-
-background:black;
-
-padding:20px;
-
-}
-
-
-.room{
-
-padding:15px;
-
-border-bottom:1px solid gray;
-
-cursor:pointer;
-
-}
+/* --- GLOBAL --- */
 body {
-background:#111;
-color:white;
-font-family:Arial;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+    background: #111;
+    color: white;
+    font-family: Arial;
+    margin: 0;
 }
 
-
+/* --- USER CHAT STYLES --- */
 .box {
-width:350px;
-background:#222;
-padding:20px;
-border-radius:15px;
+    width: 350px;
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 100px auto;
 }
-
-
-input {
-width:90%;
-padding:12px;
-margin:5px;
-}
-
-
-button {
-padding:12px;
-cursor:pointer;
-}
-
 
 #messages {
-height:300px;
-overflow:auto;
-background:#000;
-padding:10px;
+    height: 300px;
+    overflow: auto;
+    background: #000;
+    padding: 10px;
+}
+
+input, button {
+    width: 90%;
+    padding: 12px;
+    margin: 5px;
+}
+
+/* --- ADMIN PANEL STYLES --- */
+.admin-panel {
+    display: flex;
+    height: 95vh;
+}
+
+.admin-rooms {
+    width: 30%;
+    padding: 20px;
+    background: #222;
+}
+
+.admin-chat-container {
+    width: 70%;
+    padding: 20px;
+    background: #111;
+}
+
+#adminMessages {
+    height: 85vh;
+    overflow: auto;
+    background: black;
+    padding: 20px;
 }
