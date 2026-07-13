@@ -43,7 +43,15 @@ function connectServer(){
                 document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
             }
         }
-
+if(data.type === "image"){
+            // Only print if the image belongs to someone else
+            if(data.user !== username) {
+                let imgContainer = document.createElement("p");
+                imgContainer.innerHTML = "<b>" + data.user + ":</b><br><img src='" + data.image + "' style='max-width: 100%; border-radius: 8px; margin-top: 5px;'>";
+                document.getElementById("messages").appendChild(imgContainer);
+                document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+            }
+        }
         if(data.type === "closed"){
             alert(data.message);
             location.reload();
@@ -70,3 +78,31 @@ document.getElementById("sendButton").onclick = function(){
     document.getElementById("text").value="";
     document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
 };
+// Listen for image uploads
+document.getElementById("image").addEventListener("change", function(event) {
+    let file = event.target.files[0];
+    if (!file) return;
+
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        let base64Image = e.target.result;
+
+        // Send the image string to the server
+        socket.send(JSON.stringify({
+            type: "image",
+            user: username,
+            room: roomCode, 
+            image: base64Image
+        }));
+
+        // Display it instantly for the sender
+        let imgContainer = document.createElement("p");
+        imgContainer.innerHTML = "<b>You:</b><br><img src='" + base64Image + "' style='max-width: 100%; border-radius: 8px; margin-top: 5px;'>";
+        document.getElementById("messages").appendChild(imgContainer);
+        document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+
+        // Clear the input so they can send another later
+        document.getElementById("image").value = ""; 
+    };
+    reader.readAsDataURL(file); // Converts the file to a base64 string
+});

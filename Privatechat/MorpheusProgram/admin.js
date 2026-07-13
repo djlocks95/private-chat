@@ -26,8 +26,7 @@ function login(){
             showRooms(data.rooms);
         }
 
-        if(data.type === "adminMessage"){
-            // Safe search across layout elements to find matching room panels
+if(data.type === "adminMessage" || data.type === "adminImage"){
             let mainBox = document.getElementById("messages");
             let roomDiv = Array.from(mainBox.children).find(child => child.getAttribute("data-room-name") === data.room);
             
@@ -35,14 +34,18 @@ function login(){
                 let messagesContainer = roomDiv.querySelector(".room-messages");
                 let p = document.createElement("p");
                 p.style.margin = "5px 0";
-                p.innerHTML = "<b>" + data.user + ":</b> " + data.text;
+                
+                // Render differently based on text or image
+                if (data.type === "adminImage") {
+                    p.innerHTML = "<b>" + data.user + ":</b><br><img src='" + data.image + "' style='max-width: 100%; border-radius: 8px; margin-top: 5px;'>";
+                } else {
+                    p.innerHTML = "<b>" + data.user + ":</b> " + data.text;
+                }
+                
                 messagesContainer.appendChild(p);
                 roomDiv.scrollTop = roomDiv.scrollHeight;
             }
         }
-    };
-}
-
 function showRooms(rooms){
     let leftBox = document.getElementById("rooms");
     let mainBox = document.getElementById("messages");
