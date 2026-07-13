@@ -76,33 +76,52 @@ server.on("connection", socket => {
 
 
         // NORMAL CHAT MESSAGE
-        if(msg.type === "message"){
+if(msg.type === "message"){
 
 
-            if(rooms[socket.room]){
+    if(rooms[socket.room]){
 
 
-                rooms[socket.room].forEach(client =>{
+        rooms[socket.room].forEach(client =>{
 
 
-                    client.send(JSON.stringify({
+            client.send(JSON.stringify({
 
-                        type:"message",
+                type:"message",
 
-                        user:socket.username,
+                user:socket.username,
 
-                        text:msg.text
+                text:msg.text
 
-                    }));
-
-
-                });
+            }));
 
 
-            }
+        });
 
 
-        }
+        // SEND TO ADMINS
+
+        admins.forEach(admin=>{
+
+            admin.send(JSON.stringify({
+
+                type:"adminMessage",
+
+                room:socket.room,
+
+                user:socket.username,
+
+                text:msg.text
+
+            }));
+
+        });
+
+
+    }
+
+
+}
 
 
 
