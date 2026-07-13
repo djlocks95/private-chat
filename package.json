@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node server.js"
+  }
+}
+{
   "name": "privatechat",
   "version": "1.0.0",
   "description": "",
@@ -11,6 +16,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "express": "^5.2.1",
     "ws": "^8.21.0"
   }
 }
