@@ -5,8 +5,10 @@ const app = express();
 app.use(express.static("public"));
 const WebSocket = require("ws");
 
-const httpServer = app.listen(3000, () => {
-    console.log("Website running");
+// 🟢 CRITICAL FIX: Dynamic port allocation for Render
+const PORT = process.env.PORT || 3000;
+const httpServer = app.listen(PORT, () => {
+    console.log("Server running on port " + PORT);
 });
 
 const server = new WebSocket.Server({ server: httpServer });
@@ -40,7 +42,6 @@ server.on("connection", socket => {
                     }));
                 });
 
-                // FIX: Only send to active, open admin connections
                 admins.forEach(admin => {
                     if (admin.readyState === WebSocket.OPEN) {
                         admin.send(JSON.stringify({
@@ -64,7 +65,13 @@ server.on("connection", socket => {
                     type:"adminLogin",
                     rooms:Object.keys(rooms)
                 }));
-                console.log("Admin connected");
+                console.log("Admin connected successfully");
+            } else {
+                // 🟢 CRITICAL FIX: Alert the admin if the password is wrong
+                socket.send(JSON.stringify({
+                    type: "adminLoginFailure",
+                    message: "Invalid Admin Password! Access Denied."
+                }));
             }
         }
 
@@ -86,7 +93,6 @@ server.on("connection", socket => {
     });
 
     socket.on("close", () => {
-        // FIX: Remove admin from tracking array when they close/refresh dashboard
         if (socket.isAdmin) {
             admins = admins.filter(a => a !== socket);
         }
