@@ -2,25 +2,44 @@
 <html>
 
 <head>
+
 <title>Admin Panel</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
 
-<h1>Admin Dashboard</h1>
+<div class="admin">
 
 
-<input id="password" placeholder="Admin Password">
+<div class="rooms">
 
-<button onclick="login()">
-Login
-</button>
-
-
-<h2>Active Rooms</h2>
+<h2>Rooms</h2>
 
 <div id="rooms"></div>
+
+</div>
+
+
+
+<div class="chat">
+
+<h2 id="currentRoom">
+No Room Selected
+</h2>
+
+
+<div id="messages"></div>
+
+
+</div>
+
+
+</div>
 
 
 
